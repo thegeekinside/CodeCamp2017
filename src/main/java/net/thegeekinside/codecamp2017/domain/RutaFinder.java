@@ -24,11 +24,11 @@ public class RutaFinder {
         Point puntoOrigen = estacionOrigen.coordenadas;
         Point puntoDestino = estacionDestino.coordenadas;
 
-        List<Estacion> estaciones = null;
+        List<Estacion> estaciones = new ArrayList<Estacion>();
 
         // Identificar la linea del origen
         Linea lineaOrigen = estacionOrigen.transbordes.stream().filter(t -> {
-            Linea l = estacionDestino.transbordes.stream().filter(ld -> ld.nombre.equals(t.nombre)).findFirst().orElse(null);
+            Linea l = estacionOrigen.transbordes.stream().filter(ld -> ld.nombre.equals(t.nombre)).findFirst().orElse(null);
             return l != null;
         }).findFirst().orElse(null);
 
@@ -38,7 +38,7 @@ public class RutaFinder {
         }).findFirst().orElse(null);
 
 
-        if (lineaDestino != null) {
+        if (lineaOrigen.equals(lineaDestino)) {
             // Si son iguales trazar la ruta
             estaciones = basicFind(estacionOrigen, estacionDestino, lineaOrigen);
         } else {
@@ -51,7 +51,7 @@ public class RutaFinder {
                 if(est.transbordes.size() > 1) {
                     for (Linea la:est.transbordes) {
                         e = la.estaciones.stream().filter(esta -> esta.equals(estacionDestino)).findFirst().orElse(null);
-                        if (e == null) {
+                        if (e != null) {
                             trans = est;
                             linea = la;
                             break;
@@ -59,7 +59,7 @@ public class RutaFinder {
                     }
                 }
 
-                if (e == null) {
+                if (e != null) {
                     break;
                 }
             }
@@ -83,11 +83,11 @@ public class RutaFinder {
         int direccion = idxOrigen > idxDestino ? REVERSE : FORWARD;
 
         if (direccion == REVERSE) {
-            for (int i = idxOrigen; i >= idxDestino; i--) {
+            for (int i = idxOrigen - 1; i >= idxDestino; i--) {
                 estaciones.add(lineaOrigen.estaciones.get(i));
             }
         } else {
-            for (int i = idxOrigen; i <= idxDestino; i++) {
+            for (int i = idxOrigen + 1; i <= idxDestino; i++) {
                 estaciones.add(lineaOrigen.estaciones.get(i));
             }
         }

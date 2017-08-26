@@ -19,22 +19,28 @@ public class RutaFinderTest {
     public void simpleReverseFindTest (){
         List<Estacion> estaciones = rutaFinder.find("Acatitla", "Tepalcates");
 
-        assertThat(estaciones.size() == 4).isTrue();
+        assertThat(estaciones.size() == 3).isTrue();
     }
 
     @Test
     public void simpleFindTest (){
         List<Estacion> estaciones = rutaFinder.find("Acatitla", "Los Reyes");
 
-        assertThat(estaciones.size() == 3).isTrue();
+        assertThat(estaciones.size() == 2).isTrue();
     }
 
     @Test
     public void oneTransferFindTest (){
         List<Estacion> estaciones = rutaFinder.find("Acatitla", "Mixiuhca");
 
-        assertThat(estaciones.size() == 3).isTrue();
+        assertThat(estaciones.size() == 10).isTrue();
     }
 
+    @Test
+    public void oneLongTransferFindTest (){
+        List<Estacion> estaciones = rutaFinder.find("Barranca del Muerto", "Zaragoza");
+
+        assertThat(estaciones.size() == 21).isTrue();
+    }
 
 }
