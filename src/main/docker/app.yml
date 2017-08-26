@@ -1,0 +1,14 @@
+version: '2'
+services:
+    codecamp2017-app:
+        image: codecamp2017
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://codecamp2017-postgresql:5432/CodeCamp2017
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    codecamp2017-postgresql:
+        extends:
+            file: postgresql.yml
+            service: codecamp2017-postgresql
