@@ -43,4 +43,11 @@ public class RutaFinderTest {
         assertThat(estaciones.size() == 21).isTrue();
     }
 
+    @Test
+    public void sameFindTest (){
+        List<Estacion> estaciones = rutaFinder.find("Acatitla", "Acatitla");
+
+        assertThat(estaciones.size() == 0).isTrue();
+    }
+
 }
